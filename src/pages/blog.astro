@@ -2,30 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import GradientBlob from "../components/GradientBlob.astro";
 import IsoCube from "../components/IsoCube.astro";
-
-const posts = [
-  {
-    title: "Building my personal site with Astro",
-    date: "Coming soon",
-    description: "Why I chose Astro and how I set it all up.",
-    accent: "bg-iso-500",
-  },
-  {
-    title: "Deploying to Vercel for free",
-    date: "Coming soon",
-    description: "A quick guide on free hosting with Vercel and Route53.",
-    accent: "bg-iso-600",
-  },
-  {
-    title: "My developer toolkit in 2026",
-    date: "Coming soon",
-    description: "Tools, languages, and workflows I rely on every day.",
-    accent: "bg-iso-700",
-  },
-];
 ---
 
-<BaseLayout title="jokineno — Blog">
+<BaseLayout title="Olli Jokinen — Blog">
   <section class="relative min-h-[calc(100vh-4rem)] px-6 py-20 overflow-hidden">
     <!-- Background -->
     <div class="absolute inset-0 iso-grid opacity-30" aria-hidden="true" />
@@ -45,28 +24,8 @@ const posts = [
       </h1>
       <div class="mt-2 h-1.5 w-16 rounded-full bg-gradient-to-r from-iso-400 to-iso-600 iso-shadow" />
       <p class="mt-6 text-lg text-slate-500">
-        Thoughts, tutorials, and things I've learned along the way.
+        Coming soon.
       </p>
-
-      <!-- Post list with isometric shadow cards -->
-      <div class="mt-12 flex flex-col gap-6">
-        {posts.map((post) => (
-          <article class="group relative rounded-xl bg-white border-2 border-iso-200 p-6 iso-shadow cursor-default">
-            <div class="flex items-start gap-4">
-              <div class:list={["mt-1 h-3 w-3 rounded-sm shrink-0", post.accent]} style="transform: rotate(45deg);" />
-              <div>
-                <span class="text-xs font-semibold uppercase tracking-wider text-iso-500">
-                  {post.date}
-                </span>
-                <h2 class="mt-1 font-display text-xl font-semibold text-slate-800 group-hover:text-iso-700 transition-colors">
-                  {post.title}
-                </h2>
-                <p class="mt-2 text-slate-500">{post.description}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
     </div>
   </section>
 </BaseLayout>
