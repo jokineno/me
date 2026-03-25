@@ -67,6 +67,37 @@ import SocialLinks from "../components/SocialLinks.astro";
       </div>
     </div>
 
+    <!-- Career Timeline -->
+    <div class="relative z-10 mt-24 w-full max-w-2xl px-4">
+      <h2 class="font-display text-2xl font-bold text-iso-800 text-center mb-12">Career</h2>
+      <div class="relative">
+        <!-- Vertical line -->
+        <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-iso-200 -translate-x-1/2" aria-hidden="true" />
+
+        {[
+          { year: "2025 —", role: "Founding Engineer", company: "Zero.inc", description: "Building the next generation of autonomous GTM." },
+          { year: "2024 — 2025", role: "Lead Data Engineer", company: "RELEX Solutions", description: "Designing and implementing data platforms and data products at scale." },
+          { year: "2020 — 2024", role: "Data Scientist → Senior Engineer & Cloud Architect", company: "Snowfox.AI", description: "Scaled revenue 15x from 0.2M to 3M. #3 developer, #7 employee." },
+          { year: "2014 — 2020", role: "Developer & Data Scientist", company: "Self-Employed", description: "Freelance consulting, web development, and data science for startups." },
+        ].map((item, i) => (
+          <div class:list={["relative flex items-start mb-8 last:mb-0", i % 2 === 0 ? "md:flex-row-reverse" : ""]}>
+            <!-- Dot -->
+            <div class="absolute left-4 md:left-1/2 w-3 h-3 bg-iso-500 rounded-sm rotate-45 -translate-x-1/2 mt-1.5 z-10 border-2 border-white" />
+
+            <!-- Card -->
+            <div class:list={["ml-10 md:ml-0 md:w-[calc(50%-2rem)]", i % 2 === 0 ? "md:mr-auto md:pr-0 md:pl-0" : "md:ml-auto"]}>
+              <div class="bg-white border-2 border-iso-200 rounded-xl p-5 iso-shadow">
+                <span class="text-xs font-semibold uppercase tracking-wider text-iso-500">{item.year}</span>
+                <h3 class="mt-1 font-display text-lg font-semibold text-slate-800">{item.role}</h3>
+                <p class="text-sm font-medium text-iso-600">{item.company}</p>
+                <p class="mt-2 text-sm text-slate-500">{item.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
     <!-- Isometric decorative row at bottom -->
     <div class="absolute bottom-0 left-0 right-0 h-32 overflow-hidden" aria-hidden="true">
       <div class="iso-scene flex items-end justify-center gap-1 h-full pb-4 opacity-20">
