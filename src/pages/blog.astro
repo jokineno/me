@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import GradientBlob from "../components/GradientBlob.astro";
+
+const posts = [
+  {
+    title: "Building my personal site with Astro",
+    date: "Coming soon",
+    description: "Why I chose Astro and how I set it all up.",
+    color: "border-brand-fuchsia",
+  },
+  {
+    title: "Deploying to Vercel for free",
+    date: "Coming soon",
+    description: "A quick guide on free hosting with Vercel and Route53.",
+    color: "border-brand-cyan",
+  },
+  {
+    title: "My developer toolkit in 2026",
+    date: "Coming soon",
+    description: "Tools, languages, and workflows I rely on every day.",
+    color: "border-brand-amber",
+  },
+];
+---
+
+<BaseLayout title="jokineno — Blog">
+  <section class="relative min-h-[calc(100vh-4rem)] px-6 py-20">
+    <!-- Decorative blob -->
+    <GradientBlob
+      class="animate-float -top-10 right-0 h-64 w-64"
+      colors="from-brand-cyan via-brand-violet to-brand-fuchsia"
+    />
+
+    <div class="relative z-10 mx-auto max-w-2xl">
+      <h1 class="font-display text-4xl font-bold tracking-tight sm:text-5xl">
+        <span class="bg-gradient-to-r from-brand-cyan to-brand-emerald bg-clip-text text-transparent">
+          Blog
+        </span>
+      </h1>
+      <p class="mt-4 text-lg text-gray-400">
+        Thoughts, tutorials, and things I've learned along the way.
+      </p>
+
+      <!-- Post list -->
+      <div class="mt-12 flex flex-col gap-6">
+        {posts.map((post) => (
+          <article
+            class:list={[
+              "rounded-xl border-l-4 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:translate-x-1",
+              post.color,
+            ]}
+          >
+            <span class="text-xs font-medium uppercase tracking-wider text-gray-500">
+              {post.date}
+            </span>
+            <h2 class="mt-2 font-display text-xl font-semibold text-white">
+              {post.title}
+            </h2>
+            <p class="mt-2 text-gray-400">{post.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
