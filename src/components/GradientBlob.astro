@@ -1,16 +1,14 @@
 ---
 interface Props {
   class?: string;
-  colors?: string;
 }
 
-const { class: className = "", colors = "from-brand-fuchsia via-brand-violet to-brand-cyan" } = Astro.props;
+const { class: className = "" } = Astro.props;
 ---
 
 <div
   class:list={[
-    "absolute rounded-full opacity-20 blur-3xl",
-    `bg-gradient-to-br ${colors}`,
+    "absolute rounded-full opacity-30 blur-3xl bg-gradient-to-br from-iso-300 via-iso-400 to-iso-200",
     className,
   ]}
   aria-hidden="true"

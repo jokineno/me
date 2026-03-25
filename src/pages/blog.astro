@@ -1,63 +1,69 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import GradientBlob from "../components/GradientBlob.astro";
+import IsoCube from "../components/IsoCube.astro";
 
 const posts = [
   {
     title: "Building my personal site with Astro",
     date: "Coming soon",
     description: "Why I chose Astro and how I set it all up.",
-    color: "border-brand-fuchsia",
+    accent: "bg-iso-500",
   },
   {
     title: "Deploying to Vercel for free",
     date: "Coming soon",
     description: "A quick guide on free hosting with Vercel and Route53.",
-    color: "border-brand-cyan",
+    accent: "bg-iso-600",
   },
   {
     title: "My developer toolkit in 2026",
     date: "Coming soon",
     description: "Tools, languages, and workflows I rely on every day.",
-    color: "border-brand-amber",
+    accent: "bg-iso-700",
   },
 ];
 ---
 
 <BaseLayout title="jokineno — Blog">
-  <section class="relative min-h-[calc(100vh-4rem)] px-6 py-20">
-    <!-- Decorative blob -->
-    <GradientBlob
-      class="animate-float -top-10 right-0 h-64 w-64"
-      colors="from-brand-cyan via-brand-violet to-brand-fuchsia"
-    />
+  <section class="relative min-h-[calc(100vh-4rem)] px-6 py-20 overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 iso-grid opacity-30" aria-hidden="true" />
+    <GradientBlob class="animate-float -top-20 right-10 h-64 w-64" />
+
+    <!-- Floating cubes -->
+    <div class="absolute top-32 right-[10%] animate-float iso-scene" aria-hidden="true">
+      <IsoCube size={35} />
+    </div>
+    <div class="absolute bottom-40 left-[8%] animate-float-delayed iso-scene hidden md:block" aria-hidden="true">
+      <IsoCube size={45} />
+    </div>
 
     <div class="relative z-10 mx-auto max-w-2xl">
-      <h1 class="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-        <span class="bg-gradient-to-r from-brand-cyan to-brand-emerald bg-clip-text text-transparent">
-          Blog
-        </span>
+      <h1 class="font-display text-4xl font-bold tracking-tight text-iso-800 sm:text-5xl">
+        Blog
       </h1>
-      <p class="mt-4 text-lg text-gray-400">
+      <div class="mt-2 h-1.5 w-16 rounded-full bg-gradient-to-r from-iso-400 to-iso-600 iso-shadow" />
+      <p class="mt-6 text-lg text-slate-500">
         Thoughts, tutorials, and things I've learned along the way.
       </p>
 
-      <!-- Post list -->
+      <!-- Post list with isometric shadow cards -->
       <div class="mt-12 flex flex-col gap-6">
         {posts.map((post) => (
-          <article
-            class:list={[
-              "rounded-xl border-l-4 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:translate-x-1",
-              post.color,
-            ]}
-          >
-            <span class="text-xs font-medium uppercase tracking-wider text-gray-500">
-              {post.date}
-            </span>
-            <h2 class="mt-2 font-display text-xl font-semibold text-white">
-              {post.title}
-            </h2>
-            <p class="mt-2 text-gray-400">{post.description}</p>
+          <article class="group relative rounded-xl bg-white border-2 border-iso-200 p-6 iso-shadow cursor-default">
+            <div class="flex items-start gap-4">
+              <div class:list={["mt-1 h-3 w-3 rounded-sm shrink-0", post.accent]} style="transform: rotate(45deg);" />
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-iso-500">
+                  {post.date}
+                </span>
+                <h2 class="mt-1 font-display text-xl font-semibold text-slate-800 group-hover:text-iso-700 transition-colors">
+                  {post.title}
+                </h2>
+                <p class="mt-2 text-slate-500">{post.description}</p>
+              </div>
+            </div>
           </article>
         ))}
       </div>
