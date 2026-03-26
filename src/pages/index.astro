@@ -50,10 +50,10 @@ import SocialLinks from "../components/SocialLinks.astro";
       <!-- Timeline as layers/tracks -->
       <div class="flex flex-col gap-4">
         {[
-          { year: "2025 —", role: "Founding Engineer", company: "Zero.inc", description: "Building the next generation of autonomous GTM.", color: "accent-blue", level: "L5" },
-          { year: "2024 — 2025", role: "Lead Data Engineer", company: "RELEX Solutions", description: "Designing and implementing data platforms and data products at scale.", color: "accent-cyan", level: "L4" },
-          { year: "2020 — 2024", role: "Senior Data Engineer, Cloud Architect & Onboarding Tech Lead", company: "Snowfox.AI", description: "Scaled revenue 15x from 0.2M to 3M. #3 developer, #7 employee. Google Cloud Customer Award 2023, Deloitte Tech Fast 50 (2024 & 2025).", color: "accent-amber", level: "L3" },
-          { year: "2014 — 2020", role: "Developer & Data Scientist", company: "Self-Employed", description: "Freelance consulting, web development, and data science for startups.", color: "accent-green", level: "L2" },
+          { year: "2025 —", role: "Founding Engineer", company: "Zero.inc", description: "Building the next generation of autonomous GTM.", color: "accent-blue" },
+          { year: "2024 — 2025", role: "Lead Data Engineer", company: "RELEX Solutions", description: "Designing and implementing data platforms and data products at scale.", color: "accent-cyan" },
+          { year: "2020 — 2024", role: "Senior Data Engineer, Cloud Architect & Onboarding Tech Lead", company: "Snowfox.AI", description: "Scaled revenue 15x from 0.2M to 3M. #3 developer, #7 employee. Google Cloud Customer Award 2023, Deloitte Tech Fast 50 (2024 & 2025).", color: "accent-amber" },
+          { year: "2014 — 2020", role: "Developer & Data Scientist", company: "Self-Employed", description: "Freelance consulting, web development, and data science for startups.", color: "accent-green" },
         ].map((item) => (
           <div class="track-card rounded-lg p-5 group">
             <div class="flex items-start gap-4">
@@ -65,10 +65,7 @@ import SocialLinks from "../components/SocialLinks.astro";
 
               <div class="flex-1 min-w-0">
                 <div class="flex items-baseline justify-between gap-2 flex-wrap">
-                  <div class="flex items-center gap-2">
-                    <span class="annotation text-accent-blue">{item.level}</span>
-                    <h3 class="font-display text-base font-semibold text-studio-100 group-hover:text-accent-blue transition-colors">{item.role}</h3>
-                  </div>
+                  <h3 class="font-display text-base font-semibold text-studio-100 group-hover:text-accent-blue transition-colors">{item.role}</h3>
                   <span class="font-mono text-xs text-studio-500">{item.year}</span>
                 </div>
                 <p class={`font-mono text-xs text-${item.color} mt-0.5`}>{item.company}</p>
