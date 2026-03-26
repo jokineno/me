@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const thoughts = [
+  {
+    text: "Dagster's asset-driven approach is genuinely revolutionary. Instead of thinking about tasks and dependencies, you think about the data assets you want to exist. The orchestrator figures out the rest. It flips the mental model from 'what do I run' to 'what do I want to be true.' Every data team will work this way eventually.",
+    tags: ["data-engineering", "dagster"],
+    date: "2026-03",
+  },
+  {
+    text: "The best infrastructure is the one your team forgets exists. If engineers are thinking about infra, you've already lost. Platform engineering done right is invisible.",
+    tags: ["platform-engineering"],
+    date: "2026-03",
+  },
+  {
+    text: "AI agents are only as good as the tools you give them. The model is the easy part. The hard part is building reliable, well-scoped tool interfaces. This is why software engineers will matter more in the AI era, not less.",
+    tags: ["ai", "agents"],
+    date: "2026-03",
+  },
+  {
+    text: "Every startup I've seen succeed had one thing in common: they shipped before they were ready. Every startup I've seen fail had one thing in common: they waited until they were ready.",
+    tags: ["startups"],
+    date: "2026-03",
+  },
+  {
+    text: "Fine-tuning is overrated for most use cases. Prompt engineering + RAG gets you 90% of the way there. Save fine-tuning for when you actually need to change the model's behavior, not just its knowledge.",
+    tags: ["ai", "llm"],
+    date: "2026-03",
+  },
+  {
+    text: "The music industry taught me more about data than any course. When you're dealing with millions of streams, royalty splits across 200 countries, and real-time analytics — you learn to build systems that actually scale.",
+    tags: ["music", "data-engineering"],
+    date: "2026-03",
+  },
+  {
+    text: "GCP's BigQuery is still the best serverless data warehouse. Fight me. Zero infrastructure, scales to petabytes, and the SQL dialect is actually good.",
+    tags: ["gcp", "data-engineering"],
+    date: "2026-02",
+  },
+  {
+    text: "The gap between a junior and senior engineer isn't technical skill. It's knowing when NOT to build something.",
+    tags: ["engineering"],
+    date: "2026-02",
+  },
+];
+
+const tagColors: Record<string, string> = {
+  "data-engineering": "text-accent-cyan",
+  "dagster": "text-accent-cyan",
+  "platform-engineering": "text-accent-blue",
+  "ai": "text-accent-amber",
+  "agents": "text-accent-amber",
+  "llm": "text-accent-amber",
+  "startups": "text-accent-green",
+  "music": "text-accent-amber",
+  "gcp": "text-accent-blue",
+  "engineering": "text-accent-green",
+};
+---
+
+<BaseLayout title="Olli Jokinen — Thoughts">
+  <section class="relative min-h-[calc(100vh-4rem)] px-6 py-24 overflow-hidden">
+    <div class="absolute inset-0 studio-grid opacity-50" aria-hidden="true" />
+
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="annotation">thoughts.wall</span>
+        <div class="flex-1 h-px bg-accent-blue/10" />
+      </div>
+
+      <h1 class="font-display text-4xl font-bold tracking-tight text-studio-50 sm:text-5xl">
+        Wall of Thoughts
+      </h1>
+
+      <p class="mt-4 text-base text-studio-400">
+        Opinions, observations, and things I believe to be true. Subject to change.
+      </p>
+
+      <!-- Thoughts grid -->
+      <div class="mt-12 columns-1 md:columns-2 gap-4 space-y-4">
+        {thoughts.map((thought) => (
+          <div class="track-card rounded-lg p-5 break-inside-avoid">
+            <p class="text-sm leading-relaxed text-studio-200">
+              {thought.text}
+            </p>
+            <div class="mt-3 flex items-center gap-2 flex-wrap">
+              {thought.tags.map((tag) => (
+                <span class:list={["font-mono text-[0.625rem] tracking-wider", tagColors[tag] || "text-studio-400"]}>
+                  #{tag}
+                </span>
+              ))}
+              <span class="font-mono text-[0.625rem] text-studio-500 ml-auto">{thought.date}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
