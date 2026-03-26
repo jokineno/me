@@ -1,54 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import GradientBlob from "../components/GradientBlob.astro";
-import IsoCube from "../components/IsoCube.astro";
+import ParticleNetwork from "../components/ParticleNetwork.astro";
 import SocialLinks from "../components/SocialLinks.astro";
 ---
 
 <BaseLayout title="Olli Jokinen — Home">
   <section class="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-6 overflow-hidden">
-    <!-- Isometric grid background -->
-    <div class="absolute inset-0 iso-grid opacity-40" aria-hidden="true" />
-
-    <!-- Soft blobs -->
-    <GradientBlob class="animate-float -top-32 -left-32 h-80 w-80" />
-    <GradientBlob class="animate-float-delayed -bottom-32 -right-32 h-96 w-96" />
-    <GradientBlob class="animate-float-slow top-1/4 right-10 h-48 w-48" />
-
-    <!-- Floating isometric cubes -->
-    <div class="absolute top-20 left-[10%] animate-float iso-scene" aria-hidden="true">
-      <IsoCube size={40} />
-    </div>
-    <div class="absolute top-40 right-[15%] animate-float-delayed iso-scene" aria-hidden="true">
-      <IsoCube size={55} />
-    </div>
-    <div class="absolute bottom-32 left-[20%] animate-float-slow iso-scene" aria-hidden="true">
-      <IsoCube size={35} />
-    </div>
-    <div class="absolute bottom-20 right-[25%] animate-float iso-scene hidden md:block" aria-hidden="true">
-      <IsoCube size={45} />
-    </div>
-    <div class="absolute top-[60%] left-[5%] animate-float-delayed iso-scene hidden md:block" aria-hidden="true">
-      <IsoCube size={28} />
-    </div>
+    <!-- Three.js particle network background -->
+    <ParticleNetwork />
 
     <!-- Content -->
     <div class="relative z-10 flex max-w-2xl flex-col items-center text-center">
-      <!-- Isometric avatar -->
-      <div class="mb-8 iso-scene">
-        <div class="iso-cube w-24 h-24 animate-bounce-gentle">
-          <div class="iso-face-top absolute w-24 h-24" style="transform: translateZ(48px);">
-            <div class="flex h-full w-full items-center justify-center">
-              <span class="font-display text-2xl font-bold text-iso-700" style="transform: rotateZ(45deg) rotateX(0deg);">OJ</span>
-            </div>
-          </div>
-          <div class="iso-face-left absolute w-24 h-24 origin-bottom" style="transform: rotateX(-90deg) translateZ(48px);" />
-          <div class="iso-face-right absolute w-24 h-24 origin-right" style="transform: rotateY(90deg) translateZ(48px);" />
-        </div>
+      <!-- Avatar -->
+      <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-iso-400 via-iso-500 to-iso-600 iso-shadow">
+        <span class="font-display text-2xl font-bold text-white">OJ</span>
       </div>
 
       <!-- Name -->
-      <h1 class="font-display text-4xl font-bold tracking-tight text-iso-800 sm:text-5xl md:text-6xl mt-16">
+      <h1 class="font-display text-4xl font-bold tracking-tight text-iso-800 sm:text-5xl md:text-6xl">
         Olli Jokinen
       </h1>
       <div class="mt-2 h-1.5 w-24 rounded-full bg-gradient-to-r from-iso-400 via-iso-500 to-iso-600 iso-shadow" />
@@ -99,7 +68,7 @@ import SocialLinks from "../components/SocialLinks.astro";
     </div>
 
     <!-- Education -->
-    <div class="relative z-10 mt-20 w-full max-w-2xl px-4">
+    <div class="relative z-10 mt-20 w-full max-w-2xl px-4 mb-20">
       <h2 class="font-display text-2xl font-bold text-iso-800 text-center mb-8">Education</h2>
       <div class="bg-white border-2 border-iso-200 rounded-xl p-6 iso-shadow text-center">
         <h3 class="font-display text-lg font-semibold text-slate-800">M.Sc. in Data Science</h3>
@@ -115,18 +84,6 @@ import SocialLinks from "../components/SocialLinks.astro";
         >
           Read thesis &rarr;
         </a>
-      </div>
-    </div>
-
-    <!-- Isometric decorative row at bottom -->
-    <div class="absolute bottom-0 left-0 right-0 h-32 overflow-hidden" aria-hidden="true">
-      <div class="iso-scene flex items-end justify-center gap-1 h-full pb-4 opacity-20">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div
-            class="bg-iso-400 rounded-sm"
-            style={`width: 40px; height: ${20 + Math.sin(i * 0.8) * 40 + 40}px; transform: skewX(-20deg); opacity: ${0.3 + (i % 3) * 0.2};`}
-          />
-        ))}
       </div>
     </div>
   </section>

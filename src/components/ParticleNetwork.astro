@@ -1,0 +1,197 @@
+---
+---
+
+<canvas id="particle-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+
+<script>
+  import * as THREE from "three";
+
+  function init() {
+    const canvas = document.getElementById("particle-canvas") as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+    camera.position.z = 30;
+
+    const PARTICLE_COUNT = 80;
+    const CONNECTION_DISTANCE = 6;
+    const MOUSE_RADIUS = 8;
+
+    // Particle positions and velocities
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    const velocities: number[][] = [];
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 40;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+      velocities.push([
+        (Math.random() - 0.5) * 0.02,
+        (Math.random() - 0.5) * 0.02,
+        (Math.random() - 0.5) * 0.01,
+      ]);
+    }
+
+    // Points
+    const pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+    const pointsMat = new THREE.PointsMaterial({
+      color: 0x60a5fa,
+      size: 0.25,
+      transparent: true,
+      opacity: 0.8,
+      sizeAttenuation: true,
+    });
+
+    const points = new THREE.Points(pointsGeo, pointsMat);
+    scene.add(points);
+
+    // Lines
+    const maxLines = PARTICLE_COUNT * PARTICLE_COUNT;
+    const linePositions = new Float32Array(maxLines * 6);
+    const lineColors = new Float32Array(maxLines * 6);
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+    lineGeo.setAttribute("color", new THREE.BufferAttribute(lineColors, 3));
+
+    const lineMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.4,
+    });
+
+    const lines = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(lines);
+
+    // Mouse tracking
+    const mouse = new THREE.Vector2(9999, 9999);
+    const mouse3D = new THREE.Vector3();
+    const raycaster = new THREE.Raycaster();
+
+    function onMouseMove(e: MouseEvent) {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    }
+
+    function onMouseLeave() {
+      mouse.set(9999, 9999);
+    }
+
+    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mouseleave", onMouseLeave);
+
+    // Resize
+    function resize() {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const w = parent.clientWidth;
+      const h = parent.clientHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Get mouse position in 3D
+      raycaster.setFromCamera(mouse, camera);
+      const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+      raycaster.ray.intersectPlane(plane, mouse3D);
+
+      // Update particle positions
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const ix = i * 3;
+        const iy = i * 3 + 1;
+        const iz = i * 3 + 2;
+
+        positions[ix] += velocities[i][0];
+        positions[iy] += velocities[i][1];
+        positions[iz] += velocities[i][2];
+
+        // Bounce at bounds
+        if (Math.abs(positions[ix]) > 20) velocities[i][0] *= -1;
+        if (Math.abs(positions[iy]) > 15) velocities[i][1] *= -1;
+        if (Math.abs(positions[iz]) > 5) velocities[i][2] *= -1;
+
+        // Mouse repulsion
+        if (mouse.x !== 9999) {
+          const dx = positions[ix] - mouse3D.x;
+          const dy = positions[iy] - mouse3D.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MOUSE_RADIUS && dist > 0.1) {
+            const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS * 0.05;
+            positions[ix] += (dx / dist) * force;
+            positions[iy] += (dy / dist) * force;
+          }
+        }
+      }
+
+      pointsGeo.attributes.position.needsUpdate = true;
+
+      // Update connections
+      let lineIndex = 0;
+      const r = 0.37, g = 0.65, b = 0.98; // iso-500 color
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+          const dx = positions[i * 3] - positions[j * 3];
+          const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+          const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+          if (dist < CONNECTION_DISTANCE) {
+            const alpha = 1 - dist / CONNECTION_DISTANCE;
+            const idx = lineIndex * 6;
+
+            linePositions[idx] = positions[i * 3];
+            linePositions[idx + 1] = positions[i * 3 + 1];
+            linePositions[idx + 2] = positions[i * 3 + 2];
+            linePositions[idx + 3] = positions[j * 3];
+            linePositions[idx + 4] = positions[j * 3 + 1];
+            linePositions[idx + 5] = positions[j * 3 + 2];
+
+            lineColors[idx] = r * alpha;
+            lineColors[idx + 1] = g * alpha;
+            lineColors[idx + 2] = b * alpha;
+            lineColors[idx + 3] = r * alpha;
+            lineColors[idx + 4] = g * alpha;
+            lineColors[idx + 5] = b * alpha;
+
+            lineIndex++;
+          }
+        }
+      }
+
+      lineGeo.setDrawRange(0, lineIndex * 2);
+      lineGeo.attributes.position.needsUpdate = true;
+      lineGeo.attributes.color.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Cleanup on page transition (Astro View Transitions)
+    document.addEventListener("astro:before-swap", () => {
+      renderer.dispose();
+      window.removeEventListener("resize", resize);
+      canvas.removeEventListener("mousemove", onMouseMove);
+      canvas.removeEventListener("mouseleave", onMouseLeave);
+    });
+  }
+
+  // Run on initial load and after View Transitions navigation
+  init();
+  document.addEventListener("astro:after-swap", init);
+</script>
