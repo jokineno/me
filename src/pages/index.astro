@@ -5,85 +5,109 @@ import SocialLinks from "../components/SocialLinks.astro";
 ---
 
 <BaseLayout title="Olli Jokinen — Home">
+  <!-- Hero -->
   <section class="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-6 overflow-hidden">
-    <!-- Three.js particle network background -->
+    <div class="absolute inset-0 studio-grid" aria-hidden="true" />
     <ParticleNetwork />
 
-    <!-- Content -->
     <div class="relative z-10 flex max-w-2xl flex-col items-center text-center">
-      <!-- Avatar -->
-      <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-iso-400 via-iso-500 to-iso-600 iso-shadow">
-        <span class="font-display text-2xl font-bold text-white">OJ</span>
-      </div>
+      <span class="annotation mb-4">// engineer &middot; architect &middot; builder</span>
 
-      <!-- Name -->
-      <h1 class="font-display text-4xl font-bold tracking-tight text-iso-800 sm:text-5xl md:text-6xl">
+      <h1 class="font-display text-5xl font-bold tracking-tight text-studio-50 sm:text-6xl md:text-7xl">
         Olli Jokinen
       </h1>
-      <div class="mt-2 h-1.5 w-24 rounded-full bg-gradient-to-r from-iso-400 via-iso-500 to-iso-600 iso-shadow" />
 
-      <!-- Bio -->
-      <p class="mt-8 max-w-lg text-lg leading-relaxed text-slate-500">
+      <p class="mt-3 font-mono text-sm text-studio-400 tracking-wide">
+        Not the one with the hockey stick.
+      </p>
+
+      <div class="mt-1 h-px w-32 bg-gradient-to-r from-transparent via-accent-blue to-transparent glow-line" />
+
+      <p class="mt-8 max-w-lg text-base leading-relaxed text-studio-300">
         Developer and engineer scaling European startups into global products.
         I build across the full stack — from data platforms and AI-driven
         applications to LLM fine-tuning and frontend. Recognized by Deloitte
         Tech Fast 50 and the Google Cloud Customer Award.
       </p>
 
-      <!-- Social links -->
       <div class="mt-10">
         <SocialLinks />
       </div>
     </div>
+  </section>
 
-    <!-- Career Timeline -->
-    <div class="relative z-10 mt-24 w-full max-w-2xl px-4">
-      <h2 class="font-display text-2xl font-bold text-iso-800 text-center mb-12">Career</h2>
-      <div class="relative">
-        <!-- Vertical line -->
-        <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-iso-200 -translate-x-1/2" aria-hidden="true" />
+  <!-- Stack layers -->
+  <section class="relative px-6 py-24 overflow-hidden">
+    <div class="absolute inset-0 studio-grid opacity-50" aria-hidden="true" />
 
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <!-- Section label -->
+      <div class="flex items-center gap-3 mb-12">
+        <span class="annotation">career.stack</span>
+        <div class="flex-1 h-px bg-accent-blue/10" />
+      </div>
+
+      <!-- Timeline as layers/tracks -->
+      <div class="flex flex-col gap-4">
         {[
-          { year: "2025 —", role: "Founding Engineer", company: "Zero.inc", description: "Building the next generation of autonomous GTM." },
-          { year: "2024 — 2025", role: "Lead Data Engineer", company: "RELEX Solutions", description: "Designing and implementing data platforms and data products at scale." },
-          { year: "2020 — 2024", role: "Data Scientist → Senior Data Engineer, Cloud Architect & Onboarding Tech Lead", company: "Snowfox.AI", description: "Scaled revenue 15x from 0.2M to 3M. #3 developer, #7 employee. Google Cloud Customer Award 2023, Deloitte Tech Fast 50 (2024 & 2025)." },
-          { year: "2014 — 2020", role: "Developer & Data Scientist", company: "Self-Employed", description: "Freelance consulting, web development, and data science for startups." },
-        ].map((item, i) => (
-          <div class:list={["relative flex items-start mb-8 last:mb-0", i % 2 === 0 ? "md:flex-row-reverse" : ""]}>
-            <!-- Dot -->
-            <div class="absolute left-4 md:left-1/2 w-3 h-3 bg-iso-500 rounded-sm rotate-45 -translate-x-1/2 mt-1.5 z-10 border-2 border-white" />
+          { year: "2025 —", role: "Founding Engineer", company: "Zero.inc", description: "Building the next generation of autonomous GTM.", color: "accent-blue", level: "L5" },
+          { year: "2024 — 2025", role: "Lead Data Engineer", company: "RELEX Solutions", description: "Designing and implementing data platforms and data products at scale.", color: "accent-cyan", level: "L4" },
+          { year: "2020 — 2024", role: "Senior Data Engineer, Cloud Architect & Onboarding Tech Lead", company: "Snowfox.AI", description: "Scaled revenue 15x from 0.2M to 3M. #3 developer, #7 employee. Google Cloud Customer Award 2023, Deloitte Tech Fast 50 (2024 & 2025).", color: "accent-amber", level: "L3" },
+          { year: "2014 — 2020", role: "Developer & Data Scientist", company: "Self-Employed", description: "Freelance consulting, web development, and data science for startups.", color: "accent-green", level: "L2" },
+        ].map((item) => (
+          <div class="track-card rounded-lg p-5 group">
+            <div class="flex items-start gap-4">
+              <!-- Track indicator -->
+              <div class="flex flex-col items-center gap-1 pt-1">
+                <div class={`w-2 h-2 rounded-full bg-${item.color}`} />
+                <div class={`w-px h-full bg-${item.color}/20`} />
+              </div>
 
-            <!-- Card -->
-            <div class:list={["ml-10 md:ml-0 md:w-[calc(50%-2rem)]", i % 2 === 0 ? "md:mr-auto md:pr-0 md:pl-0" : "md:ml-auto"]}>
-              <div class="bg-white border-2 border-iso-200 rounded-xl p-5 iso-shadow">
-                <span class="text-xs font-semibold uppercase tracking-wider text-iso-500">{item.year}</span>
-                <h3 class="mt-1 font-display text-lg font-semibold text-slate-800">{item.role}</h3>
-                <p class="text-sm font-medium text-iso-600">{item.company}</p>
-                <p class="mt-2 text-sm text-slate-500">{item.description}</p>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2 flex-wrap">
+                  <div class="flex items-center gap-2">
+                    <span class="annotation text-accent-blue">{item.level}</span>
+                    <h3 class="font-display text-base font-semibold text-studio-100 group-hover:text-accent-blue transition-colors">{item.role}</h3>
+                  </div>
+                  <span class="font-mono text-xs text-studio-500">{item.year}</span>
+                </div>
+                <p class={`font-mono text-xs text-${item.color} mt-0.5`}>{item.company}</p>
+                <p class="mt-2 text-sm text-studio-400 leading-relaxed">{item.description}</p>
               </div>
             </div>
           </div>
         ))}
       </div>
-    </div>
 
-    <!-- Education -->
-    <div class="relative z-10 mt-20 w-full max-w-2xl px-4 mb-20">
-      <h2 class="font-display text-2xl font-bold text-iso-800 text-center mb-8">Education</h2>
-      <div class="bg-white border-2 border-iso-200 rounded-xl p-6 iso-shadow text-center">
-        <h3 class="font-display text-lg font-semibold text-slate-800">M.Sc. in Data Science</h3>
-        <p class="text-sm font-medium text-iso-600 mt-1">University of Helsinki</p>
-        <p class="mt-3 text-sm text-slate-500">
-          Thesis on fine-tuning BERT for domain-specific NLP tasks.
-        </p>
-        <a
-          href="https://helda-test-22.hulib.helsinki.fi/server/api/core/bitstreams/18965213-27ba-4e04-bb80-3c165b75de99/content"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block mt-3 text-sm font-medium text-iso-600 hover:text-iso-800 transition-colors"
-        >
-          Read thesis &rarr;
-        </a>
+      <!-- Education -->
+      <div class="mt-16">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="annotation">education.log</span>
+          <div class="flex-1 h-px bg-accent-blue/10" />
+        </div>
+
+        <div class="track-card rounded-lg p-5">
+          <div class="flex items-start gap-4">
+            <div class="flex flex-col items-center pt-1">
+              <div class="w-2 h-2 rounded-full bg-accent-blue" />
+            </div>
+            <div>
+              <h3 class="font-display text-base font-semibold text-studio-100">M.Sc. in Data Science</h3>
+              <p class="font-mono text-xs text-accent-cyan mt-0.5">University of Helsinki</p>
+              <p class="mt-2 text-sm text-studio-400">
+                Thesis on fine-tuning BERT for domain-specific NLP tasks.
+              </p>
+              <a
+                href="https://helda-test-22.hulib.helsinki.fi/server/api/core/bitstreams/18965213-27ba-4e04-bb80-3c165b75de99/content"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block mt-2 font-mono text-xs text-accent-blue hover:text-accent-cyan transition-colors"
+              >
+                read_thesis() &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

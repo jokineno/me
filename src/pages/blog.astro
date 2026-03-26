@@ -1,29 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import GradientBlob from "../components/GradientBlob.astro";
-import IsoCube from "../components/IsoCube.astro";
 ---
 
 <BaseLayout title="Olli Jokinen — Blog">
-  <section class="relative min-h-[calc(100vh-4rem)] px-6 py-20 overflow-hidden">
-    <!-- Background -->
-    <div class="absolute inset-0 iso-grid opacity-30" aria-hidden="true" />
-    <GradientBlob class="animate-float -top-20 right-10 h-64 w-64" />
+  <section class="relative min-h-[calc(100vh-4rem)] px-6 py-24 overflow-hidden">
+    <div class="absolute inset-0 studio-grid opacity-50" aria-hidden="true" />
 
-    <!-- Floating cubes -->
-    <div class="absolute top-32 right-[10%] animate-float iso-scene" aria-hidden="true">
-      <IsoCube size={35} />
-    </div>
-    <div class="absolute bottom-40 left-[8%] animate-float-delayed iso-scene hidden md:block" aria-hidden="true">
-      <IsoCube size={45} />
-    </div>
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="annotation">blog.posts</span>
+        <div class="flex-1 h-px bg-accent-blue/10" />
+      </div>
 
-    <div class="relative z-10 mx-auto max-w-2xl">
-      <h1 class="font-display text-4xl font-bold tracking-tight text-iso-800 sm:text-5xl">
+      <h1 class="font-display text-4xl font-bold tracking-tight text-studio-50 sm:text-5xl">
         Blog
       </h1>
-      <div class="mt-2 h-1.5 w-16 rounded-full bg-gradient-to-r from-iso-400 to-iso-600 iso-shadow" />
-      <p class="mt-6 text-lg text-slate-500">
+
+      <p class="mt-4 text-base text-studio-400">
         Coming soon.
       </p>
     </div>
